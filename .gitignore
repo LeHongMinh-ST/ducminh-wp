@@ -9,6 +9,7 @@ wp-content/*
 !wp-content/themes/flatsome
 !wp-content/themes/flatsome-child
 !wp-content/plugins/
+!dumps/
 
 # Ignore node_modules or build folders if you use them
 **/node_modules/
