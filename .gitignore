@@ -5,6 +5,7 @@
 
 # But inside wp-content, ignore everything except themes/my-theme
 wp-content/*
+!wp-content/themes/
 !wp-content/themes/flatsome
 !wp-content/themes/flatsome-child
 !wp-content/plugins/
