@@ -1,0 +1,14 @@
+# Ignore everything except wp-content
+/*
+!.gitignore
+!wp-content/
+
+# But inside wp-content, ignore everything except themes/my-theme
+wp-content/*
+!wp-content/themes/flatsome
+!wp-content/themes/flatsome-child
+!wp-content/plugins/
+
+# Ignore node_modules or build folders if you use them
+**/node_modules/
+**/dist/
