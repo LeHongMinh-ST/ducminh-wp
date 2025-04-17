@@ -9,11 +9,50 @@ defined( 'ABSPATH' ) || exit;
 /* Custom WooCommerce Styling for Vietceramics-style product page */
 
 /* Product Title */
-.product-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 15px;
+.product-title,
+.product-info .product_title,
+.product-info .product-title {
+    color: #981b1e;
+    font-weight: 400;
+    margin-bottom: 30px;
+    font-size: 32px;
+    font-size: 3.2rem;
+    line-height: 38px;
+    line-height: 3.8rem;
     text-transform: uppercase;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.breadcrumb a {
+    color: #666;
+    text-decoration: none;
+    position: relative;
+    padding-right: 20px;
+    margin-right: 10px;
+}
+
+.breadcrumb a:after {
+    content: '/';
+    position: absolute;
+    right: 0;
+    color: #ccc;
+}
+
+.breadcrumb a:last-child {
+    color: #981b1e;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.breadcrumb a:last-child:after {
+    display: none;
 }
 
 /* Product Gallery */
@@ -52,43 +91,62 @@ defined( 'ABSPATH' ) || exit;
 .vietceramics-buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 20px 0;
 }
 
 .vietceramics-buttons .button {
     width: 100%;
     margin: 0;
-    text-align: center;
-    font-weight: 600;
+    text-align: left;
+    font-weight: 500;
     letter-spacing: 0.5px;
-    border-radius: 3px;
-    padding: 10px 15px;
+    border-radius: 0;
+    padding: 5px 0;
+    font-size: 14px;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.vietceramics-buttons .button:after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #981b1e;
+    transition: width 0.3s ease;
+}
+
+.vietceramics-buttons .button:hover:after {
+    width: 100%;
 }
 
 .consultation-button {
-    background-color: #1a73e8 !important;
-    color: #fff !important;
+    color: #981b1e !important;
 }
 
 .learn-more-button {
-    background-color: #f8f9fa !important;
-    color: #202124 !important;
-    border: 1px solid #dadce0 !important;
+    color: #333 !important;
 }
 
-.contact-button {
-    background-color: #4267B2 !important;
-    color: #fff !important;
+.contact-button,
+.vietceramics-buttons .contact-button {
+    color: #333 !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.vietceramics-buttons .button:hover {
+    color: #981b1e !important;
 }
 
 /* Social Sharing */
 .vietceramics-social-share {
     display: flex;
     align-items: center;
-    margin-top: 20px;
     padding-top: 15px;
-    border-top: 1px solid #eee;
 }
 
 .vietceramics-social-share span {
@@ -118,6 +176,7 @@ defined( 'ABSPATH' ) || exit;
     margin: 0;
     padding: 0;
     border-bottom: 1px solid #eee;
+    gap: 30px;
 }
 
 .vietceramics-product-tabs .tabs li {
@@ -127,16 +186,21 @@ defined( 'ABSPATH' ) || exit;
 
 .vietceramics-product-tabs .tabs li a {
     display: block;
-    padding: 12px 20px;
+    padding: 12px 0;
     color: #666;
     font-weight: 500;
     text-decoration: none;
     border-bottom: 2px solid transparent;
+    font-size: 22px;
+    font-size: 2.2rem;
+    line-height: 28px;
+    line-height: 2.8rem;
+    text-transform: uppercase;
 }
 
 .vietceramics-product-tabs .tabs li.active a {
-    color: #1a73e8;
-    border-bottom-color: #1a73e8;
+    color: #981b1e;
+    border-bottom-color: #981b1e;
 }
 
 .vietceramics-product-tabs .tab-content {
@@ -154,28 +218,63 @@ defined( 'ABSPATH' ) || exit;
 /* Product Specifications */
 .product-specifications {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 10px;
 }
 
 .spec-row {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .spec-row:last-child {
-    border-bottom: none;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .spec-name {
     font-weight: 500;
     color: #666;
+    padding-right: 20px;
 }
 
 .spec-value {
     color: #333;
+    line-height: 1.5;
+    text-align: right;
+}
+
+.spec-value p {
+    margin-bottom: 0;
+}
+
+/* Product Description */
+.product-description {
+    color: #333;
+    line-height: 1.6;
+}
+
+.product-description p {
+    margin-bottom: 15px;
+}
+
+.product-description ul,
+.product-description ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.product-description h1,
+.product-description h2,
+.product-description h3,
+.product-description h4,
+.product-description h5,
+.product-description h6 {
+    color: #981b1e;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 /* Color Options */
@@ -209,11 +308,21 @@ defined( 'ABSPATH' ) || exit;
 
 .color-options img.selected,
 .color-options .color-swatch.selected {
-    border-color: #1a73e8;
+    border-color: #981b1e;
 }
 
 /* Hide default WooCommerce tabs */
 .woocommerce-tabs {
+    display: none !important;
+}
+
+/* Hide default page title */
+.shop-page-title,
+.product-page-title,
+.page-title,
+.featured-title,
+.dark.page-title,
+.page-title-inner {
     display: none !important;
 }
 
@@ -300,7 +409,7 @@ defined( 'ABSPATH' ) || exit;
 }
 
 .consultation-form .submit-button {
-    background-color: #1a73e8;
+    background-color: #981b1e;
     color: #fff;
     border: none;
     padding: 12px 20px;
@@ -317,6 +426,6 @@ defined( 'ABSPATH' ) || exit;
 
 .success-message h3 {
     margin-bottom: 10px;
-    color: #4CAF50;
+    color: #981b1e;
 }
 </style>

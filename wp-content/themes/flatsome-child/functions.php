@@ -394,3 +394,13 @@ function vietceramics_force_custom_product_template($template, $slug, $name) {
     return $template;
 }
 add_filter('wc_get_template_part', 'vietceramics_force_custom_product_template', 10, 3);
+
+/**
+ * Remove page title from product pages
+ */
+function vietceramics_remove_product_page_title() {
+    if (is_product()) {
+        remove_action('flatsome_after_header', 'flatsome_product_title', 10);
+    }
+}
+add_action('wp', 'vietceramics_remove_product_page_title');

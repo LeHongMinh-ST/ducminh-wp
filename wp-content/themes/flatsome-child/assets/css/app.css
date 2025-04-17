@@ -16,6 +16,30 @@
     line-height: 1.6rem;
 }
 
+.btn-5 {
+    border: 1px solid #ebebeb;
+    padding: 0.8rem 2rem;
+    cursor: pointer;
+    text-shadow: none;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    position: relative;
+    background-color: #ebebeb;
+    color: #3d3d3d;
+    text-transform: uppercase;
+    transition: color 0.3s ease-out;
+    font-size: 11px;
+    font-size: 1.1rem;
+    line-height: 16px;
+    line-height: 1.6rem;
+}
+.bathroom .btn-5 {
+    margin-bottom: 30px;
+}
 @media only screen and (min-width: 1440px) {
     .btn-1 {
         font-size: 14px;

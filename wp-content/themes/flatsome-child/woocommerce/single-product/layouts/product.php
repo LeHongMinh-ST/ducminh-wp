@@ -11,6 +11,9 @@ include_once get_stylesheet_directory() . '/woocommerce/single-product/layouts/p
 <div class="product-container">
 
 <div class="product-main">
+	<div class="container">
+		<?php wc_get_template('single-product/breadcrumb.php', array(), '', get_stylesheet_directory() . '/woocommerce/'); ?>
+	</div>
 	<div class="row content-row mb-0">
 
 		<div class="product-gallery col large-<?php echo flatsome_option('product_image_width'); ?>">
@@ -74,9 +77,6 @@ include_once get_stylesheet_directory() . '/woocommerce/single-product/layouts/p
 
 			<div class="tab-content">
 				<div id="features" class="tab-panel active">
-					<?php the_content(); ?>
-				</div>
-				<div id="specifications" class="tab-panel">
 					<?php
 					// Display product attributes in a table format
 					global $product;
@@ -104,8 +104,15 @@ include_once get_stylesheet_directory() . '/woocommerce/single-product/layouts/p
 							}
 						}
 						echo '</div>';
+					} else {
+						echo '<p>Không có thông số kỹ thuật cho sản phẩm này.</p>';
 					}
 					?>
+				</div>
+				<div id="specifications" class="tab-panel">
+					<div class="product-description">
+						<?php the_content(); ?>
+					</div>
 				</div>
 			</div>
 		</div>
