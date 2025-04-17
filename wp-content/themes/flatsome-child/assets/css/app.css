@@ -2832,3 +2832,7 @@
     margin: 0;
     padding: 65px 0;
 }
+
+.col-right-about  .col-inner {
+    height: 100%;
+}
