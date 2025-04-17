@@ -28,6 +28,30 @@ function flatsome_child_enqueue_styles() {
         '1.0.1'
     );
 
+    // Enqueue custom WooCommerce styles
+    wp_enqueue_style(
+        'vietceramics-woocommerce-styles',
+        get_stylesheet_directory_uri() . '/woocommerce-custom.css',
+        array(),
+        '1.0.0'
+    );
+
+    // Enqueue Magnific Popup for modals
+    wp_enqueue_style(
+        'magnific-popup',
+        'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css',
+        array(),
+        '1.1.0'
+    );
+
+    wp_enqueue_script(
+        'magnific-popup',
+        'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js',
+        array('jquery'),
+        '1.1.0',
+        true
+    );
+
     // Enqueue search results styles for search pages
     if (is_page_template('page-tiles-search.php') || is_page_template('page-bathroom-search.php')) {
         wp_enqueue_style(
@@ -268,3 +292,105 @@ function get_category_products_list($category_slug, $limit = 6, $list_class = ''
 
     return $output;
 }
+/**
+ * Handle consultation form submission via AJAX
+ */
+function send_consultation_request() {
+    // Parse the form data
+    parse_str($_POST['form_data'], $form_data);
+
+    // Sanitize input data
+    $title = isset($form_data['title']) ? sanitize_text_field($form_data['title']) : 'Ông';
+    $name = isset($form_data['name']) ? sanitize_text_field($form_data['name']) : '';
+    $phone = isset($form_data['phone']) ? sanitize_text_field($form_data['phone']) : '';
+    $email = isset($form_data['email']) ? sanitize_email($form_data['email']) : '';
+    $message = isset($form_data['message']) ? sanitize_textarea_field($form_data['message']) : '';
+    $newsletter = isset($form_data['newsletter']) ? true : false;
+    $product_id = isset($form_data['product_id']) ? intval($form_data['product_id']) : 0;
+    $product_name = isset($form_data['product_name']) ? sanitize_text_field($form_data['product_name']) : '';
+
+    // Validate required fields
+    if (empty($name) || empty($phone) || empty($email)) {
+        wp_send_json_error(array('message' => 'Vui lòng điền đầy đủ thông tin bắt buộc.'));
+        return;
+    }
+
+    // Prepare email content
+    $to = get_option('admin_email');
+    $subject = 'Yêu cầu tư vấn sản phẩm: ' . $product_name;
+
+    $body = "<p><strong>Thông tin khách hàng:</strong></p>";
+    $body .= "<p>Danh xưng: {$title}</p>";
+    $body .= "<p>Họ và tên: {$name}</p>";
+    $body .= "<p>Số điện thoại: {$phone}</p>";
+    $body .= "<p>Email: {$email}</p>";
+
+    if (!empty($message)) {
+        $body .= "<p>Lời nhắn: {$message}</p>";
+    }
+
+    $body .= "<p><strong>Thông tin sản phẩm:</strong></p>";
+    $body .= "<p>Tên sản phẩm: {$product_name}</p>";
+    $body .= "<p>ID sản phẩm: {$product_id}</p>";
+    $body .= "<p>Đường dẫn sản phẩm: " . get_permalink($product_id) . "</p>";
+
+    $body .= "<p>Đăng ký nhận bản tin: " . ($newsletter ? 'Có' : 'Không') . "</p>";
+
+    // Set headers for HTML email
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+
+    // Send email
+    $sent = wp_mail($to, $subject, $body, $headers);
+
+    // Save to database if needed (you can create a custom table for this)
+    // ...
+
+    // Subscribe to newsletter if checked
+    if ($newsletter) {
+        // Add your newsletter subscription logic here
+        // ...
+    }
+
+    if ($sent) {
+        wp_send_json_success(array('message' => 'Yêu cầu tư vấn đã được gửi thành công.'));
+    } else {
+        wp_send_json_error(array('message' => 'Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại sau.'));
+    }
+}
+
+// Add AJAX actions for consultation form
+add_action('wp_ajax_send_consultation_request', 'send_consultation_request');
+add_action('wp_ajax_nopriv_send_consultation_request', 'send_consultation_request');
+
+/**
+ * Add custom product tabs
+ */
+function vietceramics_product_tabs() {
+    // Remove default tabs
+    remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
+}
+add_action('init', 'vietceramics_product_tabs');
+
+/**
+ * Include custom templates for product page
+ */
+function vietceramics_include_custom_templates() {
+    if (is_product()) {
+        // Include color options template after short description
+        add_action('woocommerce_single_product_summary', function() {
+            wc_get_template('single-product/color-options.php', array(), '', get_stylesheet_directory() . '/woocommerce/');
+        }, 25);
+    }
+}
+add_action('wp_footer', 'vietceramics_include_custom_templates');
+
+/**
+ * Force our custom product template
+ */
+function vietceramics_force_custom_product_template($template, $slug, $name) {
+    if (is_product() && $slug === 'single-product/layouts/product') {
+        $template = get_stylesheet_directory() . '/woocommerce/single-product/layouts/product.php';
+    }
+    return $template;
+}
+add_filter('wc_get_template_part', 'vietceramics_force_custom_product_template', 10, 3);
