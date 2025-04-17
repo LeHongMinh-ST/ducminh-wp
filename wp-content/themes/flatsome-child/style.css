@@ -7,10 +7,14 @@ Version: 3.0
 */
 
 /*************** ADD CUSTOM CSS HERE.   ***************/
+.header-full-width .container {
+    padding-left: 45px;
+    padding-right: 45px;
+}
 
-
-@media only screen and (max-width: 48em) {
-/*************** ADD MOBILE ONLY CSS HERE  ***************/
-
-
+.slide-about, .first-section {
+    z-index: 10;
+}
+.col-right-about .col-innerg {
+    height: 100%;
 }
