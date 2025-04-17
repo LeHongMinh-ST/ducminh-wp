@@ -1,0 +1,152 @@
+/* Animation keyframes */
+@keyframes sprite {
+    from {
+        background-position: 0 0%;
+    }
+    to {
+        background-position: 0 100%;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -40px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Animation classes - these will be applied via JavaScript */
+.way-up, .way-down, .way-zoom:not(.btn-5) {
+    /* Initial state - will be animated via JS */
+    opacity: 0;
+}
+
+/* Ensure buttons are fully visible */
+.btn-5.way-zoom,
+.btn-2.way-zoom {
+    opacity: 1;
+}
+
+/* Add animation to bathroom icons on hover */
+.bathroom-banner article:hover .bath-1 {
+    animation: sprite 1s steps(20) infinite;
+}
+
+.bathroom-banner article:hover .bath-2 {
+    animation: sprite 1s steps(44) infinite;
+}
+
+.bathroom-banner article:hover .bath-3 {
+    animation: sprite 1s steps(31) infinite;
+}
+
+.bathroom-banner article:hover .bath-4 {
+    animation: sprite 1s steps(74) infinite;
+}
+
+.bathroom-banner article:hover .bath-5 {
+    animation: sprite 1s steps(20) infinite;
+}
+
+/* Add animation to tiles page images */
+.tiles-banner article img,
+.tiles ul li figure img {
+    transition: transform 0.3s ease;
+}
+
+.tiles-banner article:hover img,
+.tiles ul li figure:hover img {
+    transform: scale(1.05);
+}
+
+/* Animation for product items */
+.bathroom ul figure:hover .img-back {
+    transform: translateY(0);
+}
+
+.bathroom ul figure .img-back {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    left: 0;
+    transform: translateY(-101%);
+    transition: all 0.25s ease;
+}
+
+/* Add animation to buttons */
+.btn-5:before {
+    transition: transform 0.3s ease-out;
+}
+
+.btn-5:hover:before {
+    transform: scaleX(1);
+}
+
+/* Add animation to btn-2 */
+.btn-2 {
+    transition: all 0.3s ease;
+}
+
+.btn-2:hover {
+    background-color: rgba(152, 27, 30, 0.8);
+    color: #fff;
+    border-color: rgba(152, 27, 30, 0.8);
+}
+
+/* Loading animation for Load More button */
+.btn-5.loading,
+.btn-2.loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.btn-5.loading:after,
+.btn-2.loading:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    animation: spin 0.8s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

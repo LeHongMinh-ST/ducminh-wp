@@ -5,6 +5,11 @@
  * @package          Flatsome\Templates
  * @flatsome-version 3.18.0
  */
+
+// Enqueue custom CSS and JS for animations
+wp_enqueue_style('animations', get_stylesheet_directory_uri() . '/assets/css/animations.css');
+wp_enqueue_script('animations', get_stylesheet_directory_uri() . '/assets/js/animations.js', array('jquery'), '', true);
+
 get_header(); ?>
 
 <?php do_action( 'flatsome_before_page' ); ?>
@@ -137,7 +142,7 @@ get_header(); ?>
 
 <script>
 jQuery(document).ready(function($) {
-    console.log('Inline script loaded');
+    console.log('Inline script loaded for tiles page');
 
     // Direct event handlers for tiles page
     $('.js-tiles-brandFilter').on('change', function() {
@@ -170,6 +175,72 @@ jQuery(document).ready(function($) {
         if (value && value !== '0') {
             window.location.href = '/tiles-search/?style=' + value;
         }
+    });
+
+    // Handle "Load More" button animations
+    $('.js-load-more').on('click', function() {
+        var category = $(this).data('category');
+        var container = $(this).data('container');
+
+        // Add loading animation
+        $(this).addClass('loading');
+
+        // AJAX call would go here in a real implementation
+        // For demo, we'll just simulate a delay
+        setTimeout(function() {
+            // Remove loading animation
+            $('.js-load-more').removeClass('loading');
+
+            // Add animation to newly loaded items
+            $('#' + container + ' .new-items').addClass('way-zoom animated');
+        }, 1000);
+    });
+
+    // Ensure animations are triggered on page load and scroll
+    // This is a backup to make sure animations work even if the external JS file fails to load
+    function isElementInView(element) {
+        var rect = element.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+            rect.bottom >= 0
+        );
+    }
+
+    function checkAnimations() {
+        $('.way-up, .way-down, .way-zoom').each(function() {
+            if (isElementInView(this) && !$(this).hasClass('animated')) {
+                $(this).addClass('animated');
+                if ($(this).hasClass('way-up')) {
+                    $(this).css({
+                        'animation': 'fadeInUp 1s ease forwards',
+                        'opacity': '0'
+                    });
+                } else if ($(this).hasClass('way-down')) {
+                    $(this).css({
+                        'animation': 'fadeInDown 1s ease forwards',
+                        'animation-delay': '0.5s',
+                        'opacity': '0'
+                    });
+                } else if ($(this).hasClass('way-zoom') && !$(this).hasClass('btn-2') && !$(this).hasClass('btn-5')) {
+                    $(this).css({
+                        'animation': 'zoomIn 0.5s ease forwards',
+                        'opacity': '0'
+                    });
+                } else if ($(this).hasClass('way-zoom') && ($(this).hasClass('btn-2') || $(this).hasClass('btn-5'))) {
+                    $(this).css({
+                        'animation': 'zoomIn 0.5s ease forwards'
+                    });
+                }
+            }
+        });
+    }
+
+    // Run on page load
+    checkAnimations();
+
+    // Run on scroll
+    $(window).on('scroll', function() {
+        checkAnimations();
     });
 });
 </script>

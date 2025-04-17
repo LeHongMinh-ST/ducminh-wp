@@ -282,8 +282,6 @@ function get_category_products_list($category_slug, $limit = 6, $list_class = ''
                 $output .= '</li>';
             }
             wp_reset_postdata();
-        } else {
-            $output .= '<li><p>Không tìm thấy sản phẩm nào.</p></li>';
         }
 
         // Close the list
